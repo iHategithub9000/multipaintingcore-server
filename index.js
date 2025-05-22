@@ -116,7 +116,7 @@ wss.on('connection', (ws, req) => {
             }
             console.log("[chat] "+parsedMessage.nick.toString().substring(0, 20).replace("$","_")+" joined")
             clients.push({ ws: ws, req: req, fingerpr: parsedMessage.fingerprint, nick: parsedMessage.nick.toString().substring(0, 20).replace("$","_") });
-            ws.nick=parsedMessage.nick.toString().substring(0, 20).replaceAll("$","_")
+            ws.nick=parsedMessage.nick.toString().substring(0, 20).replace("$","_")
             wss.clients.forEach((c)=>{
                 c.send(JSON.stringify({ operation: "chat-m", data: parsedMessage.nick.toString().substring(0, 20).replace("$","_")+" joined the server" }))
             })
