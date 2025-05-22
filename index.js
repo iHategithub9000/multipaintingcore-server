@@ -114,11 +114,11 @@ wss.on('connection', (ws, req) => {
                 ws.send(JSON.stringify({ operation: "kickm", m: "Banned by console" }));
                 ws.close()
             }
-            console.log("[chat] "+parsedMessage.nick.toString().substring(0, 20).replaceAll("$","_")+" joined")
-            clients.push({ ws: ws, req: req, fingerpr: parsedMessage.fingerprint, nick: parsedMessage.nick.toString().substring(0, 20).replaceAll("$","_") });
+            console.log("[chat] "+parsedMessage.nick.toString().substring(0, 20).replace("$","_")+" joined")
+            clients.push({ ws: ws, req: req, fingerpr: parsedMessage.fingerprint, nick: parsedMessage.nick.toString().substring(0, 20).replace("$","_") });
             ws.nick=parsedMessage.nick.toString().substring(0, 20).replaceAll("$","_")
             wss.clients.forEach((c)=>{
-                c.send(JSON.stringify({ operation: "chat-m", data: parsedMessage.nick.toString().substring(0, 20).replaceAll("$","_")+" joined the server" }))
+                c.send(JSON.stringify({ operation: "chat-m", data: parsedMessage.nick.toString().substring(0, 20).replace("$","_")+" joined the server" }))
             })
             ws.send(JSON.stringify({ operation: "world", data: world }));
         }
