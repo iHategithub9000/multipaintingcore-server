@@ -1,4 +1,3 @@
-
 //exception handler
 process.on('uncaughtException', (error) => {
     console.log("[server] unhandled exception!");
@@ -26,9 +25,10 @@ process.on('uncaughtException', (error) => {
         console.log("[server] closed command input");
     } catch {}
     console.log("[server] it is now safe to exit the application (CTRL-C)");
-    setInterval(() => {}, 10);
+    if(!require('./conf.json').dontwaitforctrlc) setInterval(() => {}, 10);
 });
 //boot
+const { performance } = require('perf_hooks'); // support for node <19
 var startTime = performance.now()
 const WebSocket = require('ws');
 const conf = require('./conf.json');
@@ -38,7 +38,6 @@ const wss = new WebSocket.Server({ port: conf.port });
 console.log("[boot] websocket on")
 const readline = require('readline');
 console.log("[boot] cmdline input interface on")
-const { v4: uuidv4 } = require('uuid');
 const { parse } = require('path');
 let clients = [];
 const rl = readline.createInterface({
