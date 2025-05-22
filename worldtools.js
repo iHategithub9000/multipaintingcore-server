@@ -20,6 +20,16 @@ function generateWorld(x, y, name) {
     console.log("[worldgen] generated world into "+name+'.json'); 
 }
 
+function deleteWorld(name) {
+    const filename = name + '.json';
+    console.log("[deleteWorld] shredding " + filename);
+    try {
+        fs.unlinkSync(filename);
+        console.log("[deleteWorld] deleted " + filename);
+    } catch (err) {
+        console.error("[deleteWorld] error deleting " + filename + ":", err.message);
+    }
+}
 function getCell(world, x, y) {
     if (y >= world.length || x >= world[0].length || y < 0 || x < 0) {
         throw new Error("Invalid coordinates!");
