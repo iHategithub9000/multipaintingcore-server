@@ -191,12 +191,15 @@ function processCommand(input){
 
         switch (command) {
             case 'clear':
+                wt.deleteWorld(conf.world)
                 wt.generateWorld(conf.x, conf.y, conf.world)
                 world = wt.getWorld(conf.world)
                 console.log("[command|clear] world cleared")
                 wss.clients.forEach((c)=>{
-                    c.send(JSON.stringify({ operation: "world", data: world }))
+                   c.send(JSON.stringify({ operation: "kickm", m: "World has been erased, please rejoin"}));
+                    c.close()
                 })
+                break;
             case 'chat':
                 const chatMessage = args.join('$');
                 console.log(`[chat] <CONSOLE> ${chatMessage}`);
