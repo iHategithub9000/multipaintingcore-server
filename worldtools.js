@@ -67,6 +67,7 @@ module.exports = {
     generateWorld,
     getCell,
     getWorld,
+    deleteWorld,
     updateWorld,
     setCell,
 };
