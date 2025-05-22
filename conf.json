@@ -1,8 +1,8 @@
 {
     "motd":"Welcome to the Official Cellia server!",
-    "world": "world_small",
-    "x":1000,
-    "y":1000,
+    "world": "world",
+    "x":100,
+    "y":50,
     "save-interval-ms":3000,
 	"port":8080
 }
