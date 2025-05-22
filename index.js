@@ -137,6 +137,9 @@ wss.on('connection', (ws, req) => {
         }
         if (parsedMessage.operation === "chat") {
             if(clients.some(client => client.ws === ws)){
+                if(parsedMessage.content.startsWith("/")&&conf.adminfingerprints.includes([...clients].find(client => client.ws === ws).fingerpr)){
+                  processCommand(parsedMessage.content.slice(1))
+                }
                 console.log(`[chat] <${ws.nick}> ${parsedMessage.content}`)
                 wss.clients.forEach((c)=>{
                     c.send(JSON.stringify({ operation: "chat-m", data: `<${ws.nick}> ${parsedMessage.content}` }))
@@ -181,12 +184,9 @@ wss.on('connection', (ws, req) => {
         ws.close();
     });
 });
-
-
 //console
-const promptUser = () => {
-    rl.question('', (input) => {
-        const command = input.split('$')[0];
+function processCommand(input){
+  const command = input.split('$')[0];
         const args = input.split('$').slice(1);
 
         switch (command) {
@@ -289,6 +289,12 @@ const promptUser = () => {
             default:
                 console.log("[command] syntax error");
         }
+}
+
+
+const promptUser = () => {
+    rl.question('', (input) => {
+        processCommand(input)
         promptUser();
     });
 };
