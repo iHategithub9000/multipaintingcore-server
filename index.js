@@ -190,6 +190,13 @@ function processCommand(input){
         const args = input.split('$').slice(1);
 
         switch (command) {
+            case 'clear':
+                wt.generateWorld(conf.x, conf.y, conf.world)
+                world = wt.getWorld(conf.world)
+                console.log("[command|clear] world cleared")
+                wss.clients.forEach((c)=>{
+                    c.send(JSON.stringify({ operation: "world", data: world }))
+                })
             case 'chat':
                 const chatMessage = args.join('$');
                 console.log(`[chat] <CONSOLE> ${chatMessage}`);
